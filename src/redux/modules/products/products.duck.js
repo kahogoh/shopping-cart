@@ -9,6 +9,7 @@ import { wrapWithModule } from 'src/redux/utils';
 
 const initialState = {
   list: [],
+  isLoaded: false,
   isLoading: false,
   hasError: false
 };
@@ -37,8 +38,16 @@ export default (state = initialState, action) => {
 
   const reducer = {
     [GET_PRODUCTS]: R.mergeLeft({ isLoading: true }),
-    [GET_PRODUCTS_SUCCESS]: R.mergeLeft({ list: payload, isLoading: false }),
-    [GET_PRODUCTS_FAILURE]: R.mergeLeft({ isLoading: false, hasError: true })
+    [GET_PRODUCTS_SUCCESS]: R.mergeLeft({
+      list: payload,
+      isLoading: false,
+      isLoaded: true
+    }),
+    [GET_PRODUCTS_FAILURE]: R.mergeLeft({
+      isLoading: false,
+      isLoaded: true,
+      hasError: true
+    })
   }[type];
 
   return reducer ? reducer(state, payload) : state;

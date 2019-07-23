@@ -1,4 +1,4 @@
-import { takeLatest, put, call, all, fork } from 'redux-saga/effects';
+import { takeLatest, put, call, all } from 'redux-saga/effects';
 
 import * as apiCalls from './products.api';
 import * as actions from './products.duck';
@@ -14,5 +14,5 @@ function* getProductsSaga() {
 }
 
 export default function*() {
-  yield all([fork(takeLatest, actions.getProducts, getProductsSaga)]);
+  yield all([takeLatest(actions.getProducts, getProductsSaga)]);
 }

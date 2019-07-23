@@ -9,7 +9,9 @@ import { createStore, applyMiddleware, compose } from 'redux';
  *  @param {string} actionName
  *  @return {string} moduleName/actionName
  */
-export const wrapWithModule = R.curry((moduleName, actionName) => R.join([moduleName, actionName]));
+export const wrapWithModule = R.curry((moduleName, actionName) =>
+  R.join('/', [moduleName, actionName])
+);
 
 /**
  * configureStore
@@ -22,14 +24,16 @@ export const wrapWithModule = R.curry((moduleName, actionName) => R.join([module
  * @return {object} store
  */
 export const configureStore = options => {
-  const { rootReducer, rootSaga, initialState = {}, isSupportDevtool = true } = options;
+  const { rootReducer, rootSaga, isSupportDevtool = true } = options;
 
-  const composeEnhancers = isSupportDevtool ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose : compose;
+  const composeEnhancers = isSupportDevtool
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+    : compose;
 
-  let sagaMiddleware = createSagaMiddleware();
+  const sagaMiddleware = createSagaMiddleware();
 
   const middleware = composeEnhancers(applyMiddleware(sagaMiddleware));
-  const store = createStore(rootReducer, initialState, middleware);
+  const store = createStore(rootReducer, middleware);
 
   sagaMiddleware.run(rootSaga);
 
