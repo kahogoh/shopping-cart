@@ -24,7 +24,8 @@ const NAV_ITEMS = [
 const getSelectedKeys = pathname =>
   R.pipe(
     R.find(R.propEq('route', pathname)),
-    R.propOr(NAV_ITEMS[0].key, 'key')
+    R.prop('key'),
+    R.append(R.__, [])
   )(NAV_ITEMS);
 
 const renderNavItem = ({ key, name, route, icon }) => (
