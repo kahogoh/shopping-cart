@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { compose, withHandlers } from 'recompose';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import * as selectors from './redux/selectors';
 import { getProducts } from './redux/modules/products/products.duck';
+import CoreLayout from './components/coreLayout';
 import Home from './pages/home';
 import Cart from './pages/cart';
 
@@ -36,8 +37,10 @@ const App = ({ setupApp }) => {
 
   return (
     <Router>
-      <Route path="/" exact component={Home} />
-      <Route path="/cart" exact component={Cart} />
+      <CoreLayout>
+        <Route path="/" exact component={Home} />
+        <Route path="/cart" exact component={Cart} />
+      </CoreLayout>
     </Router>
   );
 };
