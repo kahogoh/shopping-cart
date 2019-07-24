@@ -67,8 +67,8 @@ export default compose(
       {
         title: '',
         key: 'addToCart',
-        render: ({ id }) => (
-          <Button onClick={() => actions.addToCarts(id)}>Add to cart</Button>
+        render: props => (
+          <Button onClick={() => actions.addToCarts(props)}>Add to cart</Button>
         )
       }
     ]
