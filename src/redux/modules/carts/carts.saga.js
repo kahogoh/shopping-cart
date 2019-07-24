@@ -1,5 +1,6 @@
 import * as R from 'ramda';
 import { takeLatest, put, call, all, select } from 'redux-saga/effects';
+import { message } from 'antd';
 
 import * as apiCalls from './carts.api';
 import * as actions from './carts.duck';
@@ -20,7 +21,7 @@ function* initCartsSaga() {
   } catch (e) {}
 }
 
-function* addCartsSaga({ payload: id }) {
+function* addCartsSaga({ payload: { id, name } }) {
   try {
     const myCarts = yield select(selectors.cartsListSelector);
     const newCarts = R.ifElse(
@@ -33,16 +34,20 @@ function* addCartsSaga({ payload: id }) {
 
     yield call(apiCalls.saveMyCarts, newCarts);
     yield put(actions.updateCarts(newCarts));
+
+    message.success(`${name} added to cart!`);
   } catch (e) {}
 }
 
-function* removeCartsSaga({ payload: id }) {
+function* removeCartsSaga({ payload: { id, name } }) {
   try {
     const myCarts = yield select(selectors.cartsListSelector);
     const updatedCarts = R.reject(R.propEq('id', id))(myCarts);
 
     yield call(apiCalls.saveMyCarts, updatedCarts);
     yield put(actions.updateCarts(updatedCarts));
+
+    message.error(`${name} has removed!`);
   } catch (e) {}
 }
 
