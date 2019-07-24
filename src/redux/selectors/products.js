@@ -1,6 +1,13 @@
 import * as R from 'ramda';
 import { createSelector } from 'reselect';
 
+import { formatCurrency } from 'src/utils';
+
+export const formatPrice = ({ price, ...rest }) => ({
+  ...rest,
+  price: `$${formatCurrency(price)}`
+});
+
 /**
  * productsSelector
  * Simply return the products module from the redux store
@@ -11,7 +18,10 @@ export const productsSelector = R.prop('products');
 
 export const productsListSelector = createSelector(
   productsSelector,
-  R.prop('list')
+  R.pipe(
+    R.prop('list'),
+    R.map(formatPrice)
+  )
 );
 
 export const productsIsLoadingSelector = createSelector(

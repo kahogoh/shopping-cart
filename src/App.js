@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import * as selectors from './redux/selectors';
 import { getProducts } from './redux/modules/products/products.duck';
 import CoreLayout from './components/coreLayout';
-import Home from './pages/home';
+import Product from './pages/product';
 import Cart from './pages/cart';
 
 /***************
@@ -38,7 +38,7 @@ const App = ({ setupApp }) => {
   return (
     <Router>
       <CoreLayout>
-        <Route path="/" exact component={Home} />
+        <Route path="/" exact component={Product} />
         <Route path="/cart" exact component={Cart} />
       </CoreLayout>
     </Router>
