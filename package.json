@@ -56,7 +56,6 @@
   "bugs": {
     "url": "https://github.com/kahogoh/shopping-cart/issues"
   },
-  "homepage": "https://github.com/kahogoh/shopping-cart#readme",
   "moduleRoots": [
     "./"
   ]
