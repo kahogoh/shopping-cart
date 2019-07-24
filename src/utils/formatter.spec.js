@@ -1,6 +1,6 @@
 import { formatCurrency } from './formatter';
 
-describe('formatter', () => {
+describe('utils/formatter', () => {
   describe('formatCurrency', () => {
     it('should return currency values', () => {
       expect(formatCurrency(100)).toBe('100.00');

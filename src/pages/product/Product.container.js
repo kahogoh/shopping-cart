@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { compose, withProps } from 'recompose';
 
 import * as selectors from 'src/redux/selectors';
+import { formatCurrency } from 'src/utils';
+import { addToCarts } from 'src/redux/modules/carts/carts.duck';
 
 /******************
  *   COMPONENTS   *
@@ -13,7 +15,12 @@ import * as selectors from 'src/redux/selectors';
 const Product = ({ isLoading, columns, list }) => (
   <>
     <h1>Products</h1>
-    <Table columns={columns} loading={isLoading} dataSource={list} />
+    <Table
+      rowKey="id"
+      columns={columns}
+      loading={isLoading}
+      dataSource={list}
+    />
   </>
 );
 
@@ -27,13 +34,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  // bindActionCreators(
-  actions: {
-    // TODO: Add product to cart
-    addToCart: id => console.log('Clicked', id)
-  } // ,
-  //dispatch
-  //   )
+  actions: bindActionCreators(
+    {
+      addToCarts
+    },
+    dispatch
+  )
 });
 
 export default compose(
@@ -55,13 +61,14 @@ export default compose(
       {
         title: 'Price',
         dataIndex: 'price',
-        align: 'right'
+        align: 'right',
+        render: text => `$${formatCurrency(text)}`
       },
       {
         title: '',
         key: 'addToCart',
         render: ({ id }) => (
-          <Button onClick={() => actions.addToCart(id)}>Add to cart</Button>
+          <Button onClick={() => actions.addToCarts(id)}>Add to cart</Button>
         )
       }
     ]
